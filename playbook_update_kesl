@@ -19,7 +19,7 @@
     - name: Clonar o repositório do GitHub
       git:
         repo: https://github.com/Redeley/Atualiza-Endpoint---Kaspersky.git
-        dest: /tmp/zabbix-update
+        dest: /tmp/update_kesl
         version: HEAD
 
     - name: Garantir permissão de execução para script.sh
