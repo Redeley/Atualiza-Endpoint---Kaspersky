@@ -1,0 +1,35 @@
+---
+- name: Clonar repositório e executar script.sh com verificação do Git
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Verificar se o Git está instalado
+      command: git --version
+      register: git_check
+      ignore_errors: yes
+
+    - name: Instalar o Git se não estiver presente
+      apt:
+        name: git
+        state: present
+        update_cache: yes
+      when: git_check.rc != 0
+
+    - name: Clonar o repositório do GitHub
+      git:
+        repo: https://github.com/Redeley/Atualiza-Endpoint---Kaspersky.git
+        dest: /tmp/zabbix-update
+        version: HEAD
+
+    - name: Garantir permissão de execução para script.sh
+      file:
+        path: /tmp/zabbix-update/install_zabbix_7.sh
+        mode: '0755'
+
+    - name: Executar o script
+      command: /tmp/zabbix-update/install_zabbix_7.sh
+
+    - name: Exibir saída do script na interface AWX
+      debug:
+        var: script_output.stdout_lines
