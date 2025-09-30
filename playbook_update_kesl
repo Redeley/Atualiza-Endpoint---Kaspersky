@@ -24,11 +24,11 @@
 
     - name: Garantir permissão de execução para script.sh
       file:
-        path: /tmp/zabbix-update/install_zabbix_7.sh
+        path: /tmp/update_kesl/update_kesl.sh
         mode: '0755'
 
     - name: Executar o script
-      command: /tmp/zabbix-update/install_zabbix_7.sh
+      command: /tmp/update_kesl/update_kesl.sh
 
     - name: Exibir saída do script na interface AWX
       debug:
